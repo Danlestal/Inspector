@@ -1,0 +1,53 @@
+<project>
+
+    <!-- Register this module for building. -->
+    <property name="runtime.buildmodules">
+        ${property.value}
+        InspectorGui
+    </property>
+
+    <!-- Declare build rules. -->
+    <property name="runtime.InspectorGui.buildtype" value="CSharpWindowsProgram" />
+    <property name="runtime.InspectorGui.outputname" value="InspectorGui" />
+    <property name="runtime.InspectorGui.copylocal" value="true" />
+    <fileset name="runtime.InspectorGui.sourcefiles" basedir="${package.dir}/source/Gui">
+         <includes name="**.xaml" />
+		<includes name="**.cs" />
+    </fileset>
+    <fileset name="runtime.InspectorGui.resourcefiles" basedir="${package.dir}/source/Gui">
+        <includes name="**.resx" />
+		<includes name="**.ico" />
+    </fileset>
+    <fileset name="runtime.InspectorGui.assemblies">
+		<includes name="WindowsBase.dll" asis="true" /> 
+		<includes name="System.Xaml.dll" asis="true" /> 
+		<includes name="PresentationCore.dll" asis="true" /> 
+		<includes name="PresentationFramework.Aero.dll" asis="true" /> 
+		<includes name="PresentationFramework.dll" asis="true" /> 
+		<includes name="Microsoft.Office.Interop.Excel.dll" asis="true" /> 
+
+    </fileset>
+    <property name="runtime.InspectorGui.runtime.moduledependencies">
+        InspectorCore
+    </property>
+    <property name="runtime.InspectorGui.usedependencies">
+		EISM_DotNetUtils
+    </property>
+	<property name="runtime.InspectorGui.win32icon" value="${package.dir}/source/InspectorCommandline/Inspector.ico" />
+    <property name="runtime.InspectorGui.defines" value="TRACE"/>
+    <property name="runtime.InspectorGui.csc-args" value="/nowarn:1591 /checked+"/>
+    <property name="runtime.InspectorGui.csc-doc" value="true"/>
+    <target name="runtime.InspectorGui.postbuildtarget">
+        <do if="${config} == 'pc-vc-dev-debug-opt'">
+            <copy file="${package.configbindir}\InspectorGui.exe" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+            <copy file="${package.configbindir}\InspectorGui.pdb" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+            <copy file="${package.configbuilddir}\Gui\InspectorGui.xml" tofile="${package.dir}\bin\InspectorGui.xml" clobber="true" overwrite="true" />
+            <foreach property="dependent" item="String" in="${runtime.InspectorGui.usedependencies}">
+                <copy todir="${package.dir}\bin" clobber="true" flatten="true" if="@{FileSetExists('package.${dependent}.copylocalfiles')}">
+                    <fileset fromfileset="package.${dependent}.copylocalfiles" />
+                </copy>
+            </foreach>
+        </do>
+    </target>
+
+</project>

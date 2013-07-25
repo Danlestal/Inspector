@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="AudioScriptInspector.Controls.AudioScriptInspectorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:filter="clr-namespace:EA.Eism.DotNetUtils.DataGridFilterLibrary;assembly=EA.Eism.DotNetUtils.GuiControls" 
+             xmlns:loadingAnim="clr-namespace:EA.Eism.DotNetUtils.LoadingControl.Control;assembly=EA.Eism.DotNetUtils.GuiControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="472" d:DesignWidth="815">
+    <Grid>
+       <DataGrid AutoGenerateColumns="True" MinHeight="428" HorizontalAlignment="Stretch" Name="_inspectionDataGrid" VerticalAlignment="Stretch" MinWidth="793" CanUserAddRows="False" Margin="0,12,0,0">
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}" >
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Column.SortMemberPath}" Value="SCRIPT Key" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGray" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Column.SortMemberPath}" Value="FILES Key" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGray" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Status}" Value="OK" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Column.SortMemberPath}" Value="Status" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGreen" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Status}" Value="NOT ON SCRIPT" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Column.SortMemberPath}" Value="Status" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="Red" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Status}" Value="NOT ON FILES" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Column.SortMemberPath}" Value="Status" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background" Value="Orange" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                    
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
+        <loadingAnim:LoadingAnimation HorizontalAlignment="Left" Margin="343,154,0,0" Name="_loadingAnimation" VerticalAlignment="Top" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,16 @@
+<InspectorConfig xmlns="AudioScriptInspector.Core" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<FilesConfig>
+		<FilesExtension>.*wav$</FilesExtension>
+		<SourceBaseFolder>E:\TWOnline\ML</SourceBaseFolder>
+	</FilesConfig>
+	<ScriptConfig>
+		<Category>category1</Category>
+		<ScriptColumns xmlns:a="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+			<a:string>prueba1</a:string>
+			<a:string>prueba2</a:string>
+		</ScriptColumns>
+		<ScriptFileName>prueba.xls</ScriptFileName>
+		<ScriptFormat>Excel</ScriptFormat>
+		<ScriptIDColumn>prueba1</ScriptIDColumn>
+	</ScriptConfig>
+</InspectorConfig>

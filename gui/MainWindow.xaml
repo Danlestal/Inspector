@@ -1,0 +1,29 @@
+﻿<Window x:Class="AudioScriptInspector.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Inspector" xmlns:my="clr-namespace:AudioScriptInspector.Controls" 
+        mc:Ignorable="d" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        d:DesignHeight="698" 
+        d:DesignWidth="862" 
+        SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24" />
+            <RowDefinition Height="230" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Height="24" HorizontalAlignment="Stretch" Margin="10,3,0,0" Name="menu1" VerticalAlignment="Top" Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Name="_exportItem" Header="Export Results" Click="ExportResults_Click" IsEnabled="False" />
+                <MenuItem Name="_saveItem" Header="Save Config" Click="SaveItem_Click" IsEnabled="False" />
+                <MenuItem Name="_loadItem" Header="Load Config" Click="LoadItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <my:ConfigTab HorizontalAlignment="Left" Margin="12,5,12,5" x:Name="_configTab" VerticalAlignment="Top" Grid.Row="1" />
+        <Button Content="Show Results" Height="23" HorizontalAlignment="Left" Margin="21,5,21,5" Name="_showResultsButton" VerticalAlignment="Bottom" Width="75" Click="_showResultsButton_Click" Grid.Row="2" />
+        <my:AudioScriptInspectorControl HorizontalAlignment="Stretch" Margin="21,5,21,5" x:Name="_audioInspectorControl" VerticalAlignment="Stretch" IsEnabled="False" Grid.Row="3" />
+    </Grid>
+</Window>

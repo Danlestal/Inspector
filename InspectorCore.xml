@@ -1,0 +1,44 @@
+<project>
+
+    <!-- Register this module for building. -->
+    <property name="runtime.buildmodules">
+        ${property.value}
+        InspectorCore
+    </property>
+
+    <!-- Declare build rules. -->
+    <property name="runtime.InspectorCore.buildtype" value="CSharpLibrary" />
+    <property name="runtime.InspectorCore.outputname" value="EA.Eism.${OutputName}.InspectorCore" />
+    <property name="runtime.InspectorCore.copylocal" value="true" />
+    <fileset name="runtime.InspectorCore.sourcefiles" basedir="${package.dir}/source/Core">
+        <includes name="**.cs" />
+    </fileset>
+    <fileset name="runtime.InspectorCore.resourcefiles" basedir="${package.dir}/source/Core">
+        <includes name="**.resx" />
+    </fileset>
+    <fileset name="runtime.InspectorCore.assemblies">
+		 <includes name="${package.dir}\bin\LinqToExcel.dll" asis="true"/>
+		 <includes name="${package.dir}\bin\DocumentFormat.OpenXml.dll" asis="true"/>
+		 <includes name="WindowsBase.dll" asis="true"/>
+		 <includes name="System.Runtime.Serialization.dll" asis="true"/>
+   </fileset>
+    <property name="runtime.InspectorCore.usedependencies">
+		Raccoon
+    </property>
+    <property name="runtime.InspectorCore.defines" value="TRACE"/>
+    <property name="runtime.InspectorCore.csc-args" value="/nowarn:1591 /checked+"/>
+    <property name="runtime.InspectorCore.csc-doc" value="true"/>
+    <target name="runtime.InspectorCore.postbuildtarget">
+        <do if="${config} == 'pc-vc-dev-debug-opt'">
+            <copy file="${package.configbindir}\InspectorCore.dll" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+            <copy file="${package.configbindir}\InspectorCore.pdb" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+            <copy file="${package.configbuilddir}\Core\InspectorCore.xml" tofile="${package.dir}\bin\InspectorCore.xml" clobber="true" overwrite="true" />
+            <foreach property="dependent" item="String" in="${runtime.InspectorCore.usedependencies}">
+                <copy todir="${package.dir}\bin" clobber="true" flatten="true" if="@{FileSetExists('package.${dependent}.copylocalfiles')}">
+                    <fileset fromfileset="package.${dependent}.copylocalfiles" />
+                </copy>
+            </foreach>
+        </do>
+    </target>
+
+</project>

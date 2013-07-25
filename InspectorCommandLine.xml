@@ -1,0 +1,44 @@
+<project>
+
+    <!-- Register this module for building. -->
+    <property name="runtime.buildmodules">
+        ${property.value}
+        InspectorCommandline
+    </property>
+
+    <!-- Declare build rules. -->
+    <property name="runtime.InspectorCommandline.buildtype" value="CSharpProgram" />
+    <property name="runtime.InspectorCommandline.platform" value="x86" />
+    <property name="runtime.InspectorCommandline.outputname" value="Inspector" />
+    <property name="runtime.InspectorCommandline.copylocal" value="true" />
+    <fileset name="runtime.InspectorCommandline.sourcefiles" basedir="${package.dir}/source/InspectorCommandline">
+        <includes name="**.cs" />
+    </fileset>
+    <fileset name="runtime.InspectorCommandline.resourcefiles" basedir="${package.dir}/source/InspectorCommandline">
+        <includes name="**.resx" />
+    </fileset>
+    <property name="runtime.InspectorCommandline.runtime.moduledependencies">
+		 InspectorCore
+		 InspectorGui
+    </property>
+    <fileset name="runtime.InspectorCommandline.assemblies">
+        <includes name="System.Xml.Linq.dll" asis="true"/>
+    </fileset>
+    <property name="runtime.InspectorCommandline.usedependencies">
+		EISM_DotNetUtils
+	</property>
+    <property name="runtime.InspectorCommandline.win32icon" value="${package.dir}/source/InspectorCommandline/Inspector.ico" />
+    <property name="runtime.InspectorCommandline.defines" value="TRACE" />
+    <property name="runtime.InspectorCommandline.csc-args" value="/nowarn:1591 /checked+" />
+    <property name="runtime.InspectorCommandline.csc-doc" value="true" />
+    <property name="runtime.InspectorCommandline.csproj.post-build-step" value='@move /y "${package.configbindir}\InspectorCommandline.xml" "${runtime.InspectorCommandline.outputname}.xml"' />
+    <target name="runtime.InspectorCommandline.postbuildtarget">
+        <copy file="${package.configbuilddir}\InspectorCommandline\InspectorCommandline.xml" tofile="${package.configbindir}\${runtime.InspectorCommandline.outputname}.xml" clobber="true" overwrite="true" />
+        <do if="${config} == 'pc-vc-dev-debug-opt'">
+            <copy file="${package.configbindir}/${runtime.InspectorCommandline.outputname}.exe" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+            <copy file="${package.configbindir}/${runtime.InspectorCommandline.outputname}.pdb" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+            <copy file="${package.configbindir}/${runtime.InspectorCommandline.outputname}.xml" todir="${package.dir}\bin" clobber="true" overwrite="true" />
+        </do>
+    </target>
+
+</project>

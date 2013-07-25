@@ -1,0 +1,33 @@
+<project>
+
+    <!-- Register this module for building. -->
+    <property name="runtime.buildmodules">
+        ${property.value}
+        Tests
+    </property>
+
+
+    <!-- Declare build rules. -->
+	<property name="runtime.Tests.buildtype" value="CSharpLibrary" />
+	<property name="runtime.Tests.csproj.unittest" value="true" />
+    
+    <property name="runtime.Tests.outputname" value="EA.Eism.${OutputName}.Tests" />
+    <property name="runtime.Tests.copylocal" value="true" />
+    <fileset name="runtime.Tests.sourcefiles" basedir="${package.dir}/source/Tests">
+       	<includes name="**.cs" />
+    </fileset>
+    <fileset name="runtime.Tests.resourcefiles" basedir="${package.dir}/source/Tests">
+        <includes name="**.resx" />
+    </fileset>
+    <fileset name="runtime.Tests.assemblies">
+    </fileset>
+     <property name="runtime.Tests.runtime.moduledependencies">
+        InspectorGui
+		InspectorCore
+    </property>
+	
+    <property name="runtime.Tests.defines" value="TRACE"/>
+    <property name="runtime.Tests.csc-args" value="/nowarn:1591 /checked+"/>
+    <property name="runtime.Tests.csc-doc" value="true"/>
+
+</project>
